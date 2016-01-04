@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Edit Meme Controller-->
@@ -44,7 +45,6 @@
                                 <rect key="frame" x="0.0" y="560" width="600" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="95x-Dz-OOT"/>
-                                    <constraint firstAttribute="width" constant="600" id="Wgf-p9-u2A"/>
                                 </constraints>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Tz1-lb-mIi"/>
@@ -63,10 +63,9 @@
                                 </items>
                             </toolbar>
                             <navigationBar contentMode="scaleToFill" misplaced="YES" layoutMarginsFollowReadableWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uub-v1-shX">
-                                <rect key="frame" x="0.0" y="20" width="600" height="40"/>
+                                <rect key="frame" x="0.0" y="20" width="600" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="FDc-Qj-jc9"/>
-                                    <constraint firstAttribute="width" constant="360" id="rfr-2O-VjC"/>
                                 </constraints>
                                 <items>
                                     <navigationItem id="wM7-ra-lgI">
@@ -87,6 +86,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="jEc-kd-9Vm" firstAttribute="top" secondItem="mvA-Y4-ZEr" secondAttribute="bottom" constant="-60" id="157-vi-iYM"/>
+                            <constraint firstItem="hRq-Ol-SYl" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="96B-uc-SF8"/>
                             <constraint firstItem="jEc-kd-9Vm" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="9ym-8s-5Wy"/>
                             <constraint firstItem="jEc-kd-9Vm" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="MGH-Jn-52m"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="hRq-Ol-SYl" secondAttribute="bottom" id="Rjd-rd-Xh5"/>
@@ -94,6 +94,9 @@
                             <constraint firstItem="uub-v1-shX" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="a2Z-8V-Nap"/>
                             <constraint firstItem="mle-UX-qfx" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="bbk-vP-Nre"/>
                             <constraint firstItem="uub-v1-shX" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="fkO-MB-RgP"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="uub-v1-shX" secondAttribute="trailing" constant="-20" id="gaD-nU-pBs"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="hRq-Ol-SYl" secondAttribute="trailing" constant="-20" id="kMh-0R-5Kn"/>
+                            <constraint firstItem="uub-v1-shX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="peZ-ke-bNf"/>
                             <constraint firstItem="mle-UX-qfx" firstAttribute="top" secondItem="jEc-kd-9Vm" secondAttribute="bottom" constant="-60" id="sfC-PR-43r"/>
                             <constraint firstItem="mvA-Y4-ZEr" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="tYa-Ac-GkM"/>
                         </constraints>
