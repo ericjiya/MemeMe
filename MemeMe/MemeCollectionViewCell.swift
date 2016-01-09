@@ -6,4 +6,9 @@
 //  Copyright © 2016 jiya. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+class MemeCollectionViewCell: UICollectionViewCell {
+    
+    @IBOutlet weak var memedImageView: UIImageView!
+}

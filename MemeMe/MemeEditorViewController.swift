@@ -8,9 +8,9 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
+class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 
-    
+    @IBOutlet weak var topNavBar: UINavigationBar!
     @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     @IBOutlet weak var bottomToolBar: UIToolbar!
@@ -42,7 +42,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         showOrHideTextFields(false)
         
         //hide share and cancel button
-        enableShareAndCancelButton(false)
+        enableShareButton(false)
         
         //delegate
         topTextField.delegate = self
@@ -74,7 +74,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             resetTextFieldsAsDefaultText()
             
             //show share and cancel button
-            enableShareAndCancelButton(true)
+            enableShareButton(true)
             
             self.dismissViewControllerAnimated(true, completion: nil)
         }
@@ -95,14 +95,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         bottomTextField.text = "Input a bottom text"
     }
     
-    func enableShareAndCancelButton(enable: Bool){
-        if enable {
-            shareButton.enabled = true
-            cancelButton.enabled = true
-        } else {
-            shareButton.enabled = false
-            cancelButton.enabled = false
-        }
+    func enableShareButton(enable: Bool){
+        shareButton.enabled = enable
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -110,11 +104,17 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         subscribeToKeyboardNotifications()
         
         cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
+        
+        //hide tab bar
+        self.tabBarController?.tabBar.hidden = true
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         unsubscribeFromKeyboardNotifications()
+        
+        //show tab bar
+        self.tabBarController?.tabBar.hidden = false
     }
     
     func textFieldDidBeginEditing(textField: UITextField) {
@@ -162,15 +162,24 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImage: imagePickerView.image!, memedImage: self.generateMemedImage())
         
         //add it to a memes array in the Application Delegate
-        (UIApplication.sharedApplication().delegate as! AppDelegate).meme.append(meme)
+        (UIApplication.sharedApplication().delegate as! AppDelegate).memes.append(meme)
     }
     
     func generateMemedImage() -> UIImage {
+        //hide tool and nav bar
+        self.topNavBar.hidden = true
+        self.bottomToolBar.hidden = true
+        
         //render view to an image
         UIGraphicsBeginImageContext(self.view.frame.size)
         self.view.drawViewHierarchyInRect(self.view.frame, afterScreenUpdates: true)
+
         let memedImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
+        
+        //show tool and nav bar
+        self.topNavBar.hidden = false
+        self.bottomToolBar.hidden = false
         
         return memedImage
     }
@@ -178,7 +187,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBAction func shareMemedImage(sender: UIBarButtonItem) {
         let memedImage = self.generateMemedImage()
         let activityViewController = UIActivityViewController(activityItems: [memedImage], applicationActivities: nil)
-        presentViewController(activityViewController, animated: true, completion: nil)
         
         activityViewController.completionWithItemsHandler = {
             (activity: String?, completed: Bool, items: [AnyObject]?, error: NSError?) -> Void in
@@ -187,19 +195,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 self.dismissViewControllerAnimated(true, completion: nil)
             }
         }
+        
+        presentViewController(activityViewController, animated: true, completion: nil)
     }
     
     @IBAction func cancelAndReturn(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-        
-        // set image as blank
-        imagePickerView.image = nil
-        
-        //set text fields as empty and hide them
-        showOrHideTextFields(false)
-        resetTextFieldsAsDefaultText()
-        
-        //hide share and cancel button
-        enableShareAndCancelButton(false)
+        dismissViewControllerAnimated(true, completion: nil)
     }
 }
